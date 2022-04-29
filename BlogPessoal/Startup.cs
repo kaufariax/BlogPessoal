@@ -43,7 +43,7 @@ namespace BlogPessoal
         {
             if (env.IsDevelopment())
             {
-                contexto.Database.EnsureCreated();
+                contexto.Database.EnsureCreated(); // Cria o Banco de Dados caso não tenha
                 app.UseDeveloperExceptionPage();
             }
 
