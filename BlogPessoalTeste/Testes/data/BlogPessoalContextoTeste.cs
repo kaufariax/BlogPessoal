@@ -26,8 +26,8 @@ namespace BlogPessoalTeste.Testes.data
         {
             UsuarioModelo usuario = new UsuarioModelo();
 
-            usuario.Nome = "Kauane Boaz";
-            usuario.Email = "kauane@email.com";
+            usuario.Nome = "Grazielly Santos";
+            usuario.Email = "ferreira@email.com";
             usuario.Senha = "134652";
             usuario.Foto = "AquiEstaOLinkDaFoto";
 
@@ -35,7 +35,7 @@ namespace BlogPessoalTeste.Testes.data
 
             _contexto.SaveChanges(); // Commita criação
 
-            Assert.IsNotNull(_contexto.Usuarios.FirstOrDefault(u => u.Email == "kauane@email.com"));
+            Assert.IsNotNull(_contexto.Usuarios.FirstOrDefault(u => u.Email == "ferreira@email.com"));
         }
     }
 }
