@@ -24,7 +24,7 @@ namespace BlogPessoal.src.controladores
 
         #endregion
 
-        #region Métodos
+        #region Metodos
 
         [HttpGet]
         public IActionResult PegarTodosTemas()
