@@ -14,18 +14,17 @@ namespace BlogPessoalTeste.Testes.repositorios
         private BlogPessoalContexto _contexto;
         private ITema _repositorio;
      
-        [TestInitialize]
-        public void ConfiguracaoInicial()
-        {
-            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
-            .UseInMemoryDatabase(databaseName: "db_blogpessoal")
-            .Options;
-            _contexto = new BlogPessoalContexto(opt);
-            _repositorio = new TemaRepositorio(_contexto);
-        }
         [TestMethod]
         public void CriarQuatroTemasNoBancoRetornaQuatroTemas2()
         {
+            // Definindo o contexto
+            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
+                .UseInMemoryDatabase(databaseName: "db_blogpessoal1")
+                .Options;
+
+            _contexto = new BlogPessoalContexto(opt);
+            _repositorio = new TemaRepositorio(_contexto);
+
             // GIVEN - Dado que registro 4 temas no banco
             _repositorio.NovoTema(new NovoTemaDTO("C#"));
             _repositorio.NovoTema(new NovoTemaDTO("Java"));
@@ -36,48 +35,89 @@ namespace BlogPessoalTeste.Testes.repositorios
             Assert.AreEqual(4, _repositorio.PegarTodosTemas().Count);
         }
         [TestMethod]
-        [DataRow(1)]
-        public void PegarTemaPeloIdRetornaTema1(int id)
+        public void PegarTemaPeloIdRetornaTema1()
         {
-            //GIVEN - Dado que pesquiso pelo id 1
-            var tema = _repositorio.PegarTemaPeloId(id);
+            // Definindo o contexto
+            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
+                .UseInMemoryDatabase(databaseName: "db_blogpessoal2")
+                .Options;
+
+            _contexto = new BlogPessoalContexto(opt);
+            _repositorio = new TemaRepositorio(_contexto);
+
+            //GIVEN - Dado que registro C# no banco
+            _repositorio.NovoTema(new NovoTemaDTO("C#"));
+
+            //WHEN - Quando pesquiso pelo id 1
+            var tema = _repositorio.PegarTemaPeloId(1);
 
             //THEN - Entao deve retornar 1 tema
             Assert.AreEqual("C#", tema.Descricao);
         }
+
         [TestMethod]
-        [DataRow("Java")]
-        public void PegaTemaPelaDescricaoRetornadoisTemas(string descricao)
+        public void PegaTemaPelaDescricaoRetornaDoisTemas()
         {
-            //GIVEN - Dado que pesquiso pela descricao Java
-            var temas = _repositorio.PegarTemaPelaDescricao(descricao);
+            // Definindo o contexto
+            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
+                .UseInMemoryDatabase(databaseName: "db_blogpessoal3")
+                .Options;
+
+            _contexto = new BlogPessoalContexto(opt);
+            _repositorio = new TemaRepositorio(_contexto);
+
+            //GIVEN - Dado que registro Java no Banco
+            _repositorio.NovoTema(new NovoTemaDTO("Java"));
+
+            //AND - E que registro JavaScript no banco
+            _repositorio.NovoTema(new NovoTemaDTO("JavaScript"));
+
+            //WHEN - Quando pesquiso pela descricao Java
+            var temas = _repositorio.PegarTemaPelaDescricao("Java");
 
             //THEN - Entao deve retornar 2 temas
             Assert.AreEqual(2, temas.Count);
         }
         [TestMethod]
-        [DataRow(3)]
-        public void AlterarTemaPythonRetornaTemaCobol(int id)
+        public void AlterarTemaPythonRetornaTemaCobol()
         {
-            //GIVEN - Dado que passo o Id 3 e o tema COBOL
-            _repositorio.AtualizarTema(new AtualizarTemaDTO(id, "COBOL"));
+            // Definindo o contexto
+            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
+                .UseInMemoryDatabase(databaseName: "db_blogpessoal4")
+                .Options;
+
+            _contexto = new BlogPessoalContexto(opt);
+            _repositorio = new TemaRepositorio(_contexto);
+
+            //GIVEN - Dado que registro Python no banco
+            _repositorio.NovoTema(new NovoTemaDTO("Python"));
+
+            //WHEN - Quando passo o Id 1 e o tema COBOL
+            _repositorio.AtualizarTema(new AtualizarTemaDTO(1, "COBOL"));
 
             //THEN - Entao deve retornar o tema COBOL
             Assert.AreEqual("COBOL",
-            _repositorio.PegarTemaPeloId(id).Descricao);
+            _repositorio.PegarTemaPeloId(1).Descricao);
         }
         [TestMethod]
-        [DataRow(1)]
-        [DataRow(2)]
-        [DataRow(3)]
-        [DataRow(4)]
-        public void DeletarTemasRetornaNulo(int id)
+        public void DeletarTemasRetornaNulo()
         {
-            //GIVEN - Dado que passo o Id 1, 2, 3, 4
-            _repositorio.DeletarTema(id);
+            // Definindo o contexto
+            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
+                .UseInMemoryDatabase(databaseName: "db_blogpessoal5")
+                .Options;
+
+            _contexto = new BlogPessoalContexto(opt);
+            _repositorio = new TemaRepositorio(_contexto);
+
+            //GIVEN - Dado que registro 1 tema no banco
+            _repositorio.NovoTema(new NovoTemaDTO("C#"));
+
+            //WHEN - Quando passo o Id 1
+            _repositorio.DeletarTema(1);
 
             //THEN - Entao deve retornar nulo
-            Assert.IsNull(_repositorio.PegarTemaPeloId(id));
+            Assert.IsNull(_repositorio.PegarTemaPeloId(1));
         }
     }
 }

@@ -5,6 +5,7 @@ using BlogPessoal.src.repositorios;
 using BlogPessoal.src.repositorios.implementacoes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace BlogPessoalTeste.Testes.repositorios
 {
     [TestClass]
@@ -14,46 +15,42 @@ namespace BlogPessoalTeste.Testes.repositorios
         private IUsuario _repositorioU;
         private ITema _repositorioT;
         private IPostagem _repositorioP;
-        [TestInitialize]
-        public void ConfiguracaoInicial()
+
+        [TestMethod]
+        public void CriaTresPostagensNoSistemaRetornaTres()
         {
+            // Definindo o contexto
             var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
-            .UseInMemoryDatabase(databaseName: "db_blogpessoal")
-            .Options;
+                 .UseInMemoryDatabase(databaseName: "db_blogpessoal20")
+                 .Options;
+
             _contexto = new BlogPessoalContexto(opt);
             _repositorioU = new UsuarioRepositorio(_contexto);
             _repositorioT = new TemaRepositorio(_contexto);
             _repositorioP = new PostagemRepositorio(_contexto);
+
+            // GIVEN - Dado que registro 2 usuarios
             _repositorioU.NovoUsuario(
-            new NovoUsuarioDTO(
-            "Kauane Farias",
-            "kauane@email.com",
-            "134652", "URLDAFOTO"
-            )
+                new NovoUsuarioDTO
+                ("Kauane Farias", "kau@email.com", "134652", "URLDAFOTO")
             );
+
             _repositorioU.NovoUsuario(
-            new NovoUsuarioDTO(
-            "Lucas Grillo",
-            "cesar@email.com",
-            "134652",
-            "URLDAFOTO"
-            )
+                new NovoUsuarioDTO
+                ("Guilherme Reluz", "julio@email.com", "134652", "URLDAFOTO")
             );
+
+            // AND - E que registro 2 temas
             _repositorioT.NovoTema(new NovoTemaDTO("C#"));
             _repositorioT.NovoTema(new NovoTemaDTO("Java"));
-            _repositorioT.NovoTema(new NovoTemaDTO("Python"));
-            _repositorioT.NovoTema(new NovoTemaDTO("JavaScript"));
-        }
-        [TestMethod]
-        public void CriaTresPostagemNoSistemaRetornaTres()
-        {
-            // GIVEN - Dado que eu tenho 3 postagens no sistema
+
+            // WHEN - Quando registro 3 postagens no sistema
             _repositorioP.NovaPostagem(
             new NovaPostagemDTO(
             "C# é muito massa",
             "É uma linguagem muito utilizada no mundo",
             "URLDAFOTO",
-            "kauane@email.com",
+            "kau@email.com",
             "C#"
             )
             );
@@ -62,7 +59,7 @@ namespace BlogPessoalTeste.Testes.repositorios
             "C# pode ser usado com Testes",
             "O teste unitário é importante para o desenvolvimento",
             "URLDAFOTO",
-            "cesar@email.com",
+            "julio@email.com",
             "C#"
             )
             );
@@ -71,7 +68,7 @@ namespace BlogPessoalTeste.Testes.repositorios
             "Java é muito massa",
             "Java também é muito utilizada no mundo",
             "URLDAFOTO",
-            "kauane@email.com",
+            "kau@email.com",
             "Java"
             )
             );
@@ -81,54 +78,139 @@ namespace BlogPessoalTeste.Testes.repositorios
             Assert.AreEqual(3, _repositorioP.PegarTodasPostagens().Count());
         }
         [TestMethod]
-        [DataRow(2)]
-        public void AtualizarPostagemRetornaPostagemAtualizada(int idPostagem)
+        public void AtualizarPostagemRetornaPostagemAtualizada()
         {
-            // GIVEN - Dado que eu vou atualizar a postagem de id 2
-            _repositorioP.AtualizarPostagem(
-            new AtualizarPostagemDTO(
-            idPostagem,
-            "JavaScript é muito massa",
-            "JavaScript é muito utilizada no mundo mas a Kau ama C#",
-            "URLDAFOTOATUALIZADA",
-            "JavaScript"
-            )
+            // Definindo o contexto
+            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
+                .UseInMemoryDatabase(databaseName: "db_blogpessoal21")
+                .Options;
+
+            _contexto = new BlogPessoalContexto(opt);
+            _repositorioU = new UsuarioRepositorio(_contexto);
+            _repositorioT = new TemaRepositorio(_contexto);
+            _repositorioP = new PostagemRepositorio(_contexto);
+
+            // GIVEN - Dado que registro 1 usuario
+            _repositorioU.NovoUsuario(
+                new NovoUsuarioDTO
+                ("Kauane Farias", "kau@email.com", "134652", "URLDAFOTO")
             );
 
-            // WHEN - Quando eu busco a postagem de id 2
+            // AND - E que registro 1 tema
+            _repositorioT.NovoTema(new NovoTemaDTO("COBOL"));
+            _repositorioT.NovoTema(new NovoTemaDTO("C#"));
+
+            // AND - E que registro 1 postagem
+            _repositorioP.NovaPostagem(
+                new NovaPostagemDTO(
+                    "COBOL é muito massa",
+                    "É uma linguagem muito utilizada no mundo",
+                    "URLDAFOTO",
+                    "kau@email.com",
+                    "COBOL"
+                )
+            );
+
+            // WHEN - Quando atualizo postagem de id 1
+            _repositorioP.AtualizarPostagem(
+                new AtualizarPostagemDTO(
+                    1,
+                    "C# é muito massa",
+                    "C# é muito utilizada no mundo",
+                    "URLDAFOTOATUALIZADA",
+                    "C#"
+                )
+            );
+
             // THEN - Eu tenho a postagem atualizada
             Assert.AreEqual(
-            "JavaScript é muito massa",
-            _repositorioP.PegarPostagemPeloId(idPostagem).Titulo
+                "C# é muito massa",
+                _repositorioP.PegarPostagemPeloId(1).Titulo
             );
             Assert.AreEqual(
-            "JavaScript é muito utilizada no mundo mas a Kau ama C#",
-            _repositorioP.PegarPostagemPeloId(idPostagem).Descricao
+                "C# é muito utilizada no mundo",
+                _repositorioP.PegarPostagemPeloId(1).Descricao
             );
             Assert.AreEqual(
-            "URLDAFOTOATUALIZADA",
-            _repositorioP.PegarPostagemPeloId(idPostagem).Foto
+                "URLDAFOTOATUALIZADA",
+                _repositorioP.PegarPostagemPeloId(1).Foto
             );
             Assert.AreEqual(
-            "JavaScript",
-            _repositorioP.PegarPostagemPeloId(idPostagem).Tema.Descricao
+                "C#",
+                _repositorioP.PegarPostagemPeloId(1).Tema.Descricao
             );
         }
         [TestMethod]
-        [DataRow("massa", null, null)]
-        public void PegarPostagensPorPesquisaRetodarCustomizada(
-        string titulo,
-        string descricaoTema,
-        string nomeCriador
-        )
+        public void PegarPostagensPorPesquisaRetornarCustomizada()
         {
-            // WHEN - Quando eu busco as postagens pelo titulo,
-            // descricao do tema e nome do criador
-            var postagens = _repositorioP
-            .PegarPostagensPorPesquisa(titulo, descricaoTema, nomeCriador);
+            // Definindo o contexto
+            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
+                .UseInMemoryDatabase(databaseName: "db_blogpessoal22")
+                .Options;
 
+            _contexto = new BlogPessoalContexto(opt);
+            _repositorioU = new UsuarioRepositorio(_contexto);
+            _repositorioT = new TemaRepositorio(_contexto);
+            _repositorioP = new PostagemRepositorio(_contexto);
+
+            // GIVEN - Dado que registro 2 usuarios
+            _repositorioU.NovoUsuario(
+                new NovoUsuarioDTO
+                ("Kauane Farias", "kau@email.com", "134652", "URLDAFOTO")
+            );
+
+            _repositorioU.NovoUsuario(
+                new NovoUsuarioDTO
+                ("Gustavo Gama", "catel@email.com", "134652", "URLDAFOTO")
+            );
+
+            // AND - E que registro 2 temas
+            _repositorioT.NovoTema(new NovoTemaDTO("C#"));
+            _repositorioT.NovoTema(new NovoTemaDTO("Java"));
+
+            // WHEN - Quando registro 3 postagens
+            _repositorioP.NovaPostagem(
+                new NovaPostagemDTO(
+                    "C# é muito massa",
+                    "É uma linguagem muito utilizada no mundo",
+                    "URLDAFOTO",
+                    "kau@email.com",
+                    "C#"
+                )
+            );
+            _repositorioP.NovaPostagem(
+                new NovaPostagemDTO(
+                    "C# pode ser usado com Testes",
+                    "O teste unitário é importante para o desenvolvimento",
+                    "URLDAFOTO",
+                    "catel@email.com",
+                    "C#"
+                )
+            );
+            _repositorioP.NovaPostagem(
+                new NovaPostagemDTO(
+                    "Java é muito massa",
+                    "Java também é muito utilizada no mundo",
+                    "URLDAFOTO",
+                    "kau@email.com",
+                    "Java"
+                )
+            );
+
+            // WHEN - Quando eu busco as postagens
             // THEN - Eu tenho as postagens que correspondem aos criterios
-            Assert.AreEqual(3, postagens.Count());
+            Assert.AreEqual(
+                2,
+                _repositorioP.PegarPostagensPorPesquisa("massa", null, null).Count
+            );
+            Assert.AreEqual(
+                2,
+                _repositorioP.PegarPostagensPorPesquisa(null, "C#", null).Count
+            );
+            Assert.AreEqual(
+                2,
+                _repositorioP.PegarPostagensPorPesquisa(null, null, "Ka").Count
+            );
         }
     }
 }
