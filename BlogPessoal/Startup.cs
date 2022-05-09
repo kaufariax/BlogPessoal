@@ -63,9 +63,9 @@ namespace BlogPessoal
             app.UseRouting();
 
             app.UseCors(c => c
-           .AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader());
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthorization();
 
