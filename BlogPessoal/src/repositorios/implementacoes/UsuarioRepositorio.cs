@@ -48,7 +48,8 @@ namespace BlogPessoal.src.repositorios.implementacoes
                 Nome = usuario.Nome,
                 Email = usuario.Email,
                 Senha = usuario.Senha,
-                Foto = usuario.Foto
+                Foto = usuario.Foto,
+                Tipo = usuario.Tipo
             });
             _contexto.SaveChanges();
         }
