@@ -73,7 +73,7 @@ namespace BlogPessoal.src.controladores
             return Ok(usuario);
         }
 
-        [HttpDelete("deletar/{id/Usuario}")]
+        [HttpDelete("deletar/{idUsuario}")]
         public IActionResult DeletarUsuario([FromRoute] int idUsuario)
         {
             _repositorio.DeletarUsuario(idUsuario);

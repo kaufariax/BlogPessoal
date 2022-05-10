@@ -26,7 +26,7 @@ namespace BlogPessoal.src.controladores
 
         #region Metodos
 
-        [HttpGet("id/{idPostagem")]
+        [HttpGet("id/{idPostagem}")]
         public IActionResult PegarPostagemPeloId([FromRoute] int idPostagem)
         {
             var postagem = _repositorio.PegarPostagemPeloId(idPostagem);
@@ -77,7 +77,7 @@ namespace BlogPessoal.src.controladores
             return Ok(postagem);
         }
 
-        [HttpDelete]
+        [HttpDelete("deletar/{idPostagem}")]
         public IActionResult DeletarPostagem([FromRoute] int idPostagem)
         {
             _repositorio.DeletarPostagem(idPostagem);

@@ -74,6 +74,7 @@ namespace BlogPessoal
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

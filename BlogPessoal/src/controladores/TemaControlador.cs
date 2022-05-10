@@ -36,7 +36,7 @@ namespace BlogPessoal.src.controladores
             return Ok(lista);
         }
 
-        [HttpGet]
+        [HttpGet("id/{idTema}")]
         public IActionResult PegarTemaPeloId([FromRoute] int idTema)
         {
             var tema = _repositorio.PegarTemaPeloId(idTema);
@@ -46,7 +46,7 @@ namespace BlogPessoal.src.controladores
             return Ok(tema);
         }
 
-        [HttpGet]
+        [HttpGet("pesquisa")]
         public IActionResult PegarTemaPelaDescricao([FromQuery] string descricaoTema)
         {
             var temas = _repositorio.PegarTemaPelaDescricao(descricaoTema);
