@@ -54,8 +54,9 @@ namespace BlogPessoal.src.dtos
 
         public string Foto { get; set; }
 
-        public AtualizarUsuarioDTO( string nome, string senha, string foto)
+        public AtualizarUsuarioDTO(int id, string nome, string senha, string foto)
         {   
+            Id = id;
             Nome = nome;
             Senha = senha;
             Foto = foto;

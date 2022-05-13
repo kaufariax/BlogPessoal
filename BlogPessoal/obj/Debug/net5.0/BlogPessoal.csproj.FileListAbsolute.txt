@@ -26,7 +26,6 @@ C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Microsoft.
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
-C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
@@ -53,3 +52,4 @@ C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\obj\Debug\net5.0\refint\Blo
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\obj\Debug\net5.0\BlogPessoal.pdb
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\obj\Debug\net5.0\BlogPessoal.genruntimeconfig.cache
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\obj\Debug\net5.0\ref\BlogPessoal.dll
+C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

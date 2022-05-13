@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using BlogPessoal.src.data;
 using BlogPessoal.src.dtos;
 using BlogPessoal.src.repositorios;
@@ -15,7 +16,7 @@ namespace BlogPessoalTeste.Testes.repositorios
         private ITema _repositorio;
      
         [TestMethod]
-        public void CriarQuatroTemasNoBancoRetornaQuatroTemas2()
+        public async Task CriarQuatroTemasNoBancoRetornaQuatroTemas2Async()
         {
             // Definindo o contexto
             var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
@@ -26,16 +27,18 @@ namespace BlogPessoalTeste.Testes.repositorios
             _repositorio = new TemaRepositorio(_contexto);
 
             // GIVEN - Dado que registro 4 temas no banco
-            _repositorio.NovoTema(new NovoTemaDTO("C#"));
-            _repositorio.NovoTema(new NovoTemaDTO("Java"));
-            _repositorio.NovoTema(new NovoTemaDTO("Python"));
-            _repositorio.NovoTema(new NovoTemaDTO("JavaScript"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("C#"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("Java"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("Python"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("JavaScript"));
+
+            var temas = await _repositorio.PegarTodosTemasAsync();
 
             // THEN - Entao deve retornar 4 temas
-            Assert.AreEqual(4, _repositorio.PegarTodosTemas().Count);
+            Assert.AreEqual(4, temas.Count);
         }
         [TestMethod]
-        public void PegarTemaPeloIdRetornaTema1()
+        public async Task PegarTemaPeloIdRetornaTema1Async()
         {
             // Definindo o contexto
             var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
@@ -46,17 +49,17 @@ namespace BlogPessoalTeste.Testes.repositorios
             _repositorio = new TemaRepositorio(_contexto);
 
             //GIVEN - Dado que registro C# no banco
-            _repositorio.NovoTema(new NovoTemaDTO("C#"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("C#"));
 
             //WHEN - Quando pesquiso pelo id 1
-            var tema = _repositorio.PegarTemaPeloId(1);
+            var tema = await _repositorio.PegarTemaPeloIdAsync(1);
 
             //THEN - Entao deve retornar 1 tema
             Assert.AreEqual("C#", tema.Descricao);
         }
 
         [TestMethod]
-        public void PegaTemaPelaDescricaoRetornaDoisTemas()
+        public async Task PegaTemaPelaDescricaoRetornaDoisTemasAsync()
         {
             // Definindo o contexto
             var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
@@ -67,19 +70,19 @@ namespace BlogPessoalTeste.Testes.repositorios
             _repositorio = new TemaRepositorio(_contexto);
 
             //GIVEN - Dado que registro Java no Banco
-            _repositorio.NovoTema(new NovoTemaDTO("Java"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("Java"));
 
             //AND - E que registro JavaScript no banco
-            _repositorio.NovoTema(new NovoTemaDTO("JavaScript"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("JavaScript"));
 
             //WHEN - Quando pesquiso pela descricao Java
-            var temas = _repositorio.PegarTemaPelaDescricao("Java");
+            var temas = await _repositorio.PegarTemaPelaDescricaoAsync("Java");
 
             //THEN - Entao deve retornar 2 temas
             Assert.AreEqual(2, temas.Count);
         }
         [TestMethod]
-        public void AlterarTemaPythonRetornaTemaCobol()
+        public async Task AlterarTemaPythonRetornaTemaCobolAsync()
         {
             // Definindo o contexto
             var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
@@ -90,17 +93,18 @@ namespace BlogPessoalTeste.Testes.repositorios
             _repositorio = new TemaRepositorio(_contexto);
 
             //GIVEN - Dado que registro Python no banco
-            _repositorio.NovoTema(new NovoTemaDTO("Python"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("Python"));
 
             //WHEN - Quando passo o Id 1 e o tema COBOL
-            _repositorio.AtualizarTema(new AtualizarTemaDTO(1, "COBOL"));
+            await _repositorio.AtualizarTemaAsync(new AtualizarTemaDTO(1, "COBOL"));
+
+            var tema = await _repositorio.PegarTemaPeloIdAsync(1);
 
             //THEN - Entao deve retornar o tema COBOL
-            Assert.AreEqual("COBOL",
-            _repositorio.PegarTemaPeloId(1).Descricao);
+            Assert.AreEqual("COBOL", tema.Descricao);
         }
         [TestMethod]
-        public void DeletarTemasRetornaNulo()
+        public async Task DeletarTemasRetornaNuloAsync()
         {
             // Definindo o contexto
             var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
@@ -111,13 +115,13 @@ namespace BlogPessoalTeste.Testes.repositorios
             _repositorio = new TemaRepositorio(_contexto);
 
             //GIVEN - Dado que registro 1 tema no banco
-            _repositorio.NovoTema(new NovoTemaDTO("C#"));
+            await _repositorio.NovoTemaAsync(new NovoTemaDTO("C#"));
 
             //WHEN - Quando passo o Id 1
-            _repositorio.DeletarTema(1);
+            await _repositorio.DeletarTemaAsync(1);
 
             //THEN - Entao deve retornar nulo
-            Assert.IsNull(_repositorio.PegarTemaPeloId(1));
+            Assert.IsNull(await _repositorio.PegarTemaPeloIdAsync(1));
         }
     }
 }

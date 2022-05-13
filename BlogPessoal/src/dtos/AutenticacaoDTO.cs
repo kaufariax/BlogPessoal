@@ -19,19 +19,18 @@ namespace BlogPessoal.src.dtos
     }
     public class AutorizacaoDTO
     {
+       public int Id { get; set; }
+       public string Email { get; set; }
+       public TipoUsuario Tipo { get; set; }
+       public string Token { get; set; }
 
-            public int Id { get; set; }
-            public string Email { get; set; }
-            public TipoUsuario Tipo { get; set; }
-            public string Token { get; set; }
-
-            public AutorizacaoDTO(int id, string email, TipoUsuario tipo, string token)
-            {
-                Id = id;
-                Email = email;
-                Tipo = tipo;
-                Token = token;
-            }
+       public AutorizacaoDTO(int id, string email, TipoUsuario tipo, string token)
+       {
+           Id = id;
+           Email = email;
+           Tipo = tipo;
+           Token = token;
+       }
 
      }
 
