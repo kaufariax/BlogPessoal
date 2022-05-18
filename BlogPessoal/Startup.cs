@@ -37,9 +37,19 @@ namespace BlogPessoal
         public void ConfigureServices(IServiceCollection services)
         {
             //Configuração Banco de Dados (Contexto)
-            services.AddDbContext<BlogPessoalContexto>(
-                opt => opt.
-                UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            if (Configuration["Enviroment:Start"] == "PROD")
+            {
+                services.AddEntityFrameworkNpgsql()
+                .AddDbContext<BlogPessoalContexto>(
+                opt =>
+                opt.UseNpgsql(Configuration["ConnectionStringsProd:DefaultConnection"]));
+            }
+            else
+            {
+                services.AddDbContext<BlogPessoalContexto>(
+                opt =>
+                opt.UseSqlServer(Configuration["ConnectionStringsDev:DefaultConnection"]));
+            }
 
             // Repositorios
             services.AddScoped<IUsuario, UsuarioRepositorio>();
@@ -121,6 +131,13 @@ namespace BlogPessoal
             }
 
             // Ambiente de produção
+            contexto.Database.EnsureCreated();
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlogPessoal v1");
+                c.RoutePrefix = string.Empty;
+            });
             // Rotas
             app.UseRouting();
 

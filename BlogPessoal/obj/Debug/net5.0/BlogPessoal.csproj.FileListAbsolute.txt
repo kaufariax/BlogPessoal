@@ -60,3 +60,5 @@ C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Swashbuckl
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\obj\Debug\net5.0\BlogPessoal.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\BlogPessoal.xml
 C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\obj\Debug\net5.0\BlogPessoal.xml
+C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Npgsql.dll
+C:\Users\User\Documents\BPVS\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
