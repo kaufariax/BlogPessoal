@@ -105,7 +105,7 @@ namespace BlogPessoal.src.controladores
         ///     POST /api/Usuarios
         ///     {
         ///        "nome": "Kauane Farias",
-        ///        "email": "kau@emaail.com",
+        ///        "email": "kau@email.com",
         ///        "senha": "134652",
         ///        "foto": "URLFOTO",
         ///        "tipo": "NORMAL"

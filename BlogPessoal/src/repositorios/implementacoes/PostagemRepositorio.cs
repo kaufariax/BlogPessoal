@@ -93,11 +93,11 @@ namespace BlogPessoal.src.repositorios.implementacoes
         /// </summary>
         /// <param name="titulo">Titulo da postagem</param>
         /// <param name="descricaoTema">Descrição do tema</param>
-        /// <param name="nomeCriador">Nome do criador</param>
+        /// <param name="emailCriador">Email do criador</param>
         /// <return>List PostagemModelo</return>
-        public async Task<List<PostagemModelo>> PegarPostagensPorPesquisaAsync(string titulo, string descricaoTema, string nomeCriador)
+        public async Task<List<PostagemModelo>> PegarPostagensPorPesquisaAsync(string titulo, string descricaoTema, string emailCriador)
         {
-            switch (titulo, descricaoTema, nomeCriador)
+            switch (titulo, descricaoTema, emailCriador)
             {
                 case (null, null, null):
                     return await PegarTodasPostagensAsync();
@@ -106,7 +106,7 @@ namespace BlogPessoal.src.repositorios.implementacoes
                     return await _contexto.Postagens
                     .Include(p => p.Tema)
                     .Include(p => p.Criador)
-                    .Where(p => p.Criador.Nome.Contains(nomeCriador))
+                    .Where(p => p.Criador.Nome.Contains(emailCriador))
                     .ToListAsync();
 
                 case (null, _, null):
@@ -138,7 +138,7 @@ namespace BlogPessoal.src.repositorios.implementacoes
                     .Include(p => p.Criador)
                     .Where(p =>
                     p.Tema.Descricao.Contains(descricaoTema) &
-                    p.Criador.Nome.Contains(nomeCriador))
+                    p.Criador.Nome.Contains(emailCriador))
                     .ToListAsync();
 
                 case (_, null, _):
@@ -147,7 +147,7 @@ namespace BlogPessoal.src.repositorios.implementacoes
                     .Include(p => p.Criador)
                     .Where(p =>
                     p.Titulo.Contains(titulo) &
-                    p.Criador.Nome.Contains(nomeCriador))
+                    p.Criador.Nome.Contains(emailCriador))
                     .ToListAsync();
 
                 case (_, _, _):
@@ -157,7 +157,7 @@ namespace BlogPessoal.src.repositorios.implementacoes
                     .Where(p =>
                     p.Titulo.Contains(titulo) |
                     p.Tema.Descricao.Contains(descricaoTema) |
-                    p.Criador.Nome.Contains(nomeCriador))
+                    p.Criador.Nome.Contains(emailCriador))
                     .ToListAsync();
             }
         }

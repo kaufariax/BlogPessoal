@@ -53,7 +53,7 @@ namespace BlogPessoal.src.controladores
         /// </summary>
         /// <returns>ActionResult</returns>
         /// <response code="200">Lista de postagens</response>
-        /// <response code="204">Lista vasia</response>
+        /// <response code="204">Lista vazia</response>
         [HttpGet]
         [Authorize]
         public async Task<ActionResult> PegarTodasPostagensAsync()
@@ -70,7 +70,7 @@ namespace BlogPessoal.src.controladores
         /// </summary>
         /// <param name="titulo">string</param>
         /// <param name="descricaoTema">string</param>
-        /// <param name="nomeCriador">string</param>
+        /// <param name="emailCriador">string</param>
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna postagens</response>
         /// <response code="204">Postagns não existe pra essa pesquisa</response>
@@ -81,9 +81,9 @@ namespace BlogPessoal.src.controladores
         public async Task<ActionResult> PegarPostagensPorPesquisaAsync(
             [FromQuery]string titulo,
             [FromQuery]string descricaoTema,
-            [FromQuery]string nomeCriador)
+            [FromQuery]string emailCriador)
         {
-            var postagens = await _repositorio.PegarPostagensPorPesquisaAsync(titulo, descricaoTema, nomeCriador);
+            var postagens = await _repositorio.PegarPostagensPorPesquisaAsync(titulo, descricaoTema, emailCriador);
 
             if (postagens.Count < 1) return NoContent();
 
@@ -103,7 +103,7 @@ namespace BlogPessoal.src.controladores
         ///        "titulo": "Dotnet Core mudando o mundo", 
         ///        "descricao": "Uma ferramenta muito boa para desenvolver aplicações web",
         ///        "foto": "URLDAIMAGEM",
-        ///        "nomeCriador": "Kauane Farias",
+        ///        "emailCriador": "kau@gmail.com",
         ///        "descricaoTema": "CSHARP"
         ///     }
         ///
