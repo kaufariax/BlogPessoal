@@ -193,7 +193,7 @@ namespace BlogPessoalTeste.Testes.repositorios
 
             var postagensTeste1 = await _repositorioP.PegarPostagensPorPesquisaAsync("massa", null, null);
             var postagensTeste2 = await _repositorioP.PegarPostagensPorPesquisaAsync(null, "C#", null);
-            var postagensTeste3 = await _repositorioP.PegarPostagensPorPesquisaAsync(null, null, "Kauane Farias");
+            var postagensTeste3 = await _repositorioP.PegarPostagensPorPesquisaAsync(null, null, "kau@email.com");
 
             // WHEN - Quando eu busco as postagens
             // THEN - Eu tenho as postagens que correspondem aos criterios

@@ -73,7 +73,7 @@ namespace BlogPessoal.src.controladores
         /// <param name="emailCriador">string</param>
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna postagens</response>
-        /// <response code="204">Postagns não existe pra essa pesquisa</response>
+        /// <response code="204">Postagens não existe pra essa pesquisa</response>
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TemaModelo))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet("pesquisa")]
@@ -123,7 +123,7 @@ namespace BlogPessoal.src.controladores
         }
 
         /// <summary>
-        /// Atualizar Tema
+        /// Atualizar Postagem
         /// </summary>
         /// <param name="postagem">AtualizarPostagemDTO</param>
         /// <returns>ActionResult</returns>
